@@ -342,3 +342,34 @@ curl -X PATCH -d "movie[rating]=pg-13" http://localhost:3000/movies/2
 # delete a movie
 delete '/movies/:id', to: 'movies#delete'
 ```
+
+**Delete a movie with id of 1**
+
+```
+curl -X DELETE localhost:3000/movies/1
+```
+
+## Don't forget CORS for Cross Brower Requests
+
+**In the Gemfile**
+
+```
+gem 'rack-cors', :require => 'rack/cors'
+```
+
+
+Don't forget to bundle install.
+
+
+**In the config/application.rb**
+
+```
+ config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :patch, :put, :dele\
+te, :options]
+      end
+    end
+
+```
