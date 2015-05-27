@@ -227,7 +227,7 @@ Notice that the params hash always has the controller name and action name as we
 
 ### Create Action
 
-*** Comment this line from the app/controllers/application_controller.rb**
+**Comment this line from the app/controllers/application_controller.rb**
 
 ```
 # protect_from_forgery with: :exception
@@ -288,3 +288,36 @@ params.require(:movie)
 Look up strong parameters in the Rails Guide. 
 
 ## Lab: Create a Song.
+
+## Demo: More Controller Actions
+
+### Update Action
+
+**Add this to the movies controller**
+
+```
+# PATCH /movies/:id
+  def update
+    @movie = Movie.find(params[:id])
+    if @movie.update(movie_params)
+      head :no_content
+    else
+      render json: @movie.errors, status: :unprocessable_entity
+    end
+  end
+```
+
+**Add this route for update**
+
+```
+# Update a movie
+patch '/movies/:id', to: 'movies#update'
+```
+
+This will update a specific movie
+
+**Update the movie with id 2 with a new rating**
+
+```
+curl -X PATCH -d "movie[rating]=pg-13" http://localhost:3000/movies/2
+```
