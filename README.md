@@ -321,3 +321,24 @@ This will update a specific movie
 ```
 curl -X PATCH -d "movie[rating]=pg-13" http://localhost:3000/movies/2
 ```
+
+### Delete Action
+
+**Add this to the movies controller**
+
+```
+# DELETE /movies/:id
+  def delete
+    @movie = Movie.find(params[:id])
+    @movie.delete
+
+    head :no_content
+  end
+```
+
+**Add this to your routes**
+
+```
+# delete a movie
+delete '/movies/:id', to: 'movies#delete'
+```
