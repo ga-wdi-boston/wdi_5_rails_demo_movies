@@ -367,8 +367,7 @@ Don't forget to bundle install.
  config.middleware.use Rack::Cors do
       allow do
         origins '*'
-        resource '*', headers: :any, methods: [:get, :post, :patch, :put, :dele\
-te, :options]
+        resource '*', headers: :any, methods: [:get, :post, :patch, :put, :delete, :options]
       end
     end
 
