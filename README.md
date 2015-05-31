@@ -5,7 +5,7 @@
 * Create a  front-end app, using Ajax, that will use this API to create, read, update and destory movies.
 * Draw Diagrams that show the flow of a HTTP Requests and Responses and the how the Model, View and Controller interact.
 
-## Create a new Rails application.
+## Code Along: Create a new Rails application.
 
 
 **Install Rails, only if it's not installed.**
@@ -48,7 +48,7 @@ In your browser, go to port 3000.
 
 Ya, you should see the Welcome Aboard page. Rails is running!!!
 
-## Create a Movie Model
+## Code Along: Create a Movie Model
 
 Use a rails generator to create a Movie model.
 
@@ -140,7 +140,7 @@ What's going on here?
 
 * Don't forget to use the rails dbconsole and rails console commands to verify you've created 3 songs.
 
-## Demo: Create Movie Controller Actions and Routes.
+## Code Along: Create Movie Controller Actions and Routes.
 
 We will implement the index, show, create, update and delete actions. 
 
@@ -223,7 +223,7 @@ Notice that the params hash always has the controller name and action name as we
 * And add a breakpoint into each action and examine the params hash.
 
 
-## Demo: More Controller Actions
+## Code Along: More Controller Actions
 
 ### Create Action
 
@@ -289,7 +289,7 @@ Look up strong parameters in the Rails Guide.
 
 ## Lab: Create a Song.
 
-## Demo: More Controller Actions
+## Code Along: More Controller Actions
 
 ### Update Action
 
@@ -322,15 +322,15 @@ This will update a specific movie
 curl -X PATCH -d "movie[rating]=pg-13" http://localhost:3000/movies/2
 ```
 
-### Delete Action
+### Destroy Action
 
 **Add this to the movies controller**
 
 ```
 # DELETE /movies/:id
-  def delete
+  def destroy
     @movie = Movie.find(params[:id])
-    @movie.delete
+    @movie.destroy
 
     head :no_content
   end
@@ -349,7 +349,37 @@ delete '/movies/:id', to: 'movies#delete'
 curl -X DELETE localhost:3000/movies/1
 ```
 
-## Don't forget CORS for Cross Brower Requests
+## Code Along: Create movies routes using 'resources'
+
+Previously, we were *explicitly* creating routes for each Movie Controller action. *This is tedious.* Let's see how we can make this more concise.
+
+**But, first lets look at all of routes!**
+
+```
+rake routes
+```
+
+**Change config/routes to**
+
+```ruby
+Rails.application.routes.draw do
+  # Default root for '/' in this application                                    
+  root 'movies#index'
+
+  # create routes for movie resource                                            
+  resources :movies, except: [:new, :edit]
+end
+```
+
+The 'resources' method will automatically generate all the routes we've been creating individually. *Much better.*
+
+**In another terminal run rake routes again and compare the routes.**
+
+```
+rake routes
+```
+
+## Code Along: Don't forget CORS for Cross Brower Requests
 
 **In the Gemfile**
 
